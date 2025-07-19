@@ -1,0 +1,21 @@
+<p>invoices-page works!</p>
+
+<div class="grid grid-nogutter">
+  <div class="col-4">
+    @for(month of months; track month.value){
+      <div class="mb-2 w-full">
+        <p-button class="w-full mb-2" [label]="month.label+` 2025`"></p-button>
+      </div>
+    }
+
+  </div>
+  <div class="col-8">
+    <div class="grid ">
+      @for(facture of factures.value().data; track facture.id){
+        <a [href]="facture.folder" target="_blank" class="col-6 link" style="text-decoration: none;">
+          <app-invoice-card [facture]="facture"></app-invoice-card>
+        </a>
+      }
+    </div>
+  </div>
+</div>
