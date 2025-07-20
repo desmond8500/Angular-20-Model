@@ -1,20 +1,36 @@
-import { Component, resource } from '@angular/core';
+import { Component, resource, Signal, signal } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { InvoiceCard } from '../invoice-card/invoice-card';
 import { ButtonModule } from 'primeng/button';
+import { InvoiceService } from '../../../services/erp/invoice-service';
+import { Breadcrumbs } from '../../../src/breadcrumbs/breadcrumbs';
 
 @Component({
   selector: 'app-invoices-page',
-  imports: [CardModule, InvoiceCard, ButtonModule],
+  imports: [CardModule, InvoiceCard, ButtonModule, Breadcrumbs],
   templateUrl: './invoices-page.html',
   styleUrl: './invoices-page.scss',
 })
 export class InvoicesPage {
   server = 'https://dash3.yonkou.info/api/v1';
-  factures = resource({
-    loader: () =>
-      fetch(this.server + '/factures').then((response) => response.json()),
-  });
+  title = signal('')
+  factures = signal<any>('');
+
+  constructor(private invoiceService: InvoiceService) {}
+
+  ngOnInit() {
+  }
+
+  getMonth(month :any, year:number){
+    this.invoiceService.get_invoices(month, year).subscribe({
+      next: (value) => {
+        this.factures.set(value);
+        this.title.set(this.months[month-1].label)
+      },
+      error: (err) => console.error(err),
+      complete: () => console.log('DONE!'),
+    });
+  }
 
   months = [
     { label: 'Janvier', value: 1 },
@@ -30,4 +46,7 @@ export class InvoicesPage {
     { label: 'Novembre', value: 11 },
     { label: 'Décembre', value: 12 },
   ];
+
+  date = new Date();
+  activeMonth = this.date.getMonth() + 1;
 }
