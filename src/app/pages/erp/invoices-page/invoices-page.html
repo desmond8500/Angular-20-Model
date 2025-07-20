@@ -11,8 +11,6 @@
           <p-button class="w-full mb-2" [label]="month.label+` 2025`" (onClick)="getMonth(month.value, 2025)"></p-button>
         </div>
       }
-    }@empty {
-      <div>Il n'y a pas de facture</div>
     }
 
   </div>
@@ -23,7 +21,18 @@
         <a [href]="facture.folder" target="_blank" class="col-6 link" style="text-decoration: none;">
           <app-invoice-card [facture]="facture"></app-invoice-card>
         </a>
-      }
+      }@empty {
+        <div class="col-12">
+          <div class="bg-white text-center mt-2 p-3 text-lg border-round">
+            <div class="my-2">
+              <i class="pi pi-info-circle" style="font-size: 3rem"></i>
+            </div>
+            <div class="font-bold">Pas de facture disponible</div>
+            <div class="mt-2">Veuillez sélectionner un mois</div>
+          </div>
+
+        </div>
+    }
     </div>
   </div>
 </div>
