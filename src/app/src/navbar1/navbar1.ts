@@ -28,14 +28,9 @@ export class Navbar1 {
   ngOnInit() {
     this.items = [
       {
-        label: 'Accueil',
+        label: 'Home',
         icon: 'pi pi-home',
         url:'/',
-      },
-      {
-        label: 'Factures',
-        icon: 'pi pi-file',
-        url:'/invoices',
       },
       {
         label: 'Pages',
