@@ -11,4 +11,41 @@
     {{ facture().description }}
   </div>
   <div class="price">{{ facture().montant | number }} F</div>
+  <hr>
+  @if(facture().spents.length > 0){
+    <div>
+      <h3>Dépenses</h3>
+      <p-table [value]="facture().spents" showGridlines="true" >
+
+        <ng-template #body let-spent>
+            <tr>
+              <td>
+                <a href="{{ spent.file }}" target="_blank">{{ spent.name }}</a>
+              </td>
+              <td class="text-right">
+                {{ spent.montant | number }} F
+              </td>
+            </tr>
+
+        </ng-template>
+        <ng-template #footer >
+            <tr>
+              <td>
+                Total
+              </td>
+              <td class="text-right">
+                0F
+                <!-- {{ totalCost | number }} F -->
+              </td>
+            </tr>
+
+        </ng-template>
+
+
+      </p-table>
+
+
+    </div>
+
+  }
 </div>
